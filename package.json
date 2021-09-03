@@ -1,0 +1,54 @@
+{
+  "name": "simple-router-ts",
+  "version": "1.0.0",
+  "description": "Simple-Router-TS",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "prettier --check . && eslint . --ext .js,.ts && tsc --noEmit",
+    "lint:fix": "prettier --write . && eslint . --fix --ext .js,.ts",
+    "make-badges": "istanbul-badges-readme",
+    "prepare": "husky install",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulMartynov/Simple-Router-TS.git"
+  },
+  "author": "Pavel Martynov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulMartynov/Simple-Router-TS/issues"
+  },
+  "homepage": "https://github.com/PaulMartynov/Simple-Router-TS#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.15.0",
+    "@babel/runtime": "^7.14.8",
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "babel-jest": "^27.0.6",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "istanbul-badges-readme": "^1.4.0",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.0.1",
+    "prettier": "2.3.2",
+    "typescript": "^4.3.5"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix --ext .js,.ts",
+    "*.{js,css,md,ts,json}": "prettier --write"
+  },
+  "dependencies": {}
+}
