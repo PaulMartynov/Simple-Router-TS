@@ -8,7 +8,6 @@ export class Router {
   constructor() {
     this.currentPath = window.location.pathname + window.location.search;
     this.previousPath = this.currentPath;
-    window.addEventListener("popstate", this.handleAllListeners);
     document.body.addEventListener("click", (event: Event) => {
       event.preventDefault();
       const url = (event.target as HTMLLinkElement).getAttribute("href") ?? "";
