@@ -1,4 +1,5 @@
-export class Router {
+// eslint-disable-next-line max-classes-per-file
+export abstract class Router {
   private listeners: Map<Route, Listener> = new Map<Route, Listener>();
 
   private currentPath: string;
@@ -6,7 +7,7 @@ export class Router {
   private previousPath: string;
 
   constructor() {
-    this.currentPath = window.location.pathname + window.location.search;
+    this.currentPath = this.getPath();
     this.previousPath = this.currentPath;
     window.addEventListener("popstate", this.go);
     document.body.addEventListener("click", (event: Event) => {
@@ -20,6 +21,8 @@ export class Router {
       this.go();
     });
   }
+
+  getPath = (): string => "";
 
   private isMatch = (match: Route, path: string) =>
     (match instanceof RegExp && match.test(path)) ||
@@ -67,8 +70,20 @@ export class Router {
 
   go = (): void => {
     this.previousPath = this.currentPath;
-    this.currentPath = window.location.pathname + window.location.search;
+    this.currentPath = this.getPath();
 
     this.handleAllListeners();
+  };
+}
+
+export class HashRouter extends Router {
+  getPath = (): string => {
+    return window.location.hash.slice(1);
+  };
+}
+
+export class HistoryRouter extends Router {
+  getPath = (): string => {
+    return window.location.pathname + window.location.search;
   };
 }

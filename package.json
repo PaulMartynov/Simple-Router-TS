@@ -10,8 +10,7 @@
     "lint:fix": "prettier --write . && eslint . --fix --ext .js,.ts",
     "make-badges": "istanbul-badges-readme",
     "prepare": "husky install",
-    "build": "webpack --mode=production",
-    "start": "webpack serve --mode=development"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -40,16 +39,12 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
-    "html-webpack-plugin": "^5.3.2",
     "husky": "^7.0.1",
     "istanbul-badges-readme": "^1.4.0",
     "jest": "^27.0.6",
     "lint-staged": "^11.0.1",
     "prettier": "2.3.2",
-    "typescript": "^4.3.5",
-    "webpack": "^5.47.0",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "typescript": "^4.3.5"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix --ext .js,.ts",
