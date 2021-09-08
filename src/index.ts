@@ -26,12 +26,11 @@ import { Router } from "./router";
 
   const router = new Router();
 
-  await router.on(/.*/, { onEnter: render });
+  await router.on(/.*/, { onEnter: [render] });
   await router.on(
     (path) => path === "/contacts",
-    { onEnter: render, onLeave: leaving, beforeEnter: log } // onEnter
+    { onEnter: [render], onLeave: [leaving], beforeEnter: [log] } // onEnter
   );
-  await router.on("/about", { onEnter: render });
-  // await router.on("/about", { onEnter: log });
-  await router.on("/about/us", { onEnter: render });
+  await router.on("/about", { onEnter: [render, log] });
+  await router.on("/about/us", { onEnter: [render] });
 })();

@@ -1,10 +1,14 @@
-type functionPath = (path: string) => boolean;
-type Route = string | RegExp | functionPath;
+type State = {
+  [key: string]: string;
+};
+type pathFunction = (path: string) => boolean;
+type hookFunction = (state: State) => void;
+type Route = string | RegExp | pathFunction;
 
 interface Hooks {
-  onEnter?: any;
-  onLeave?: any;
-  beforeEnter?: any;
+  onEnter?: hookFunction[];
+  onLeave?: hookFunction[];
+  beforeEnter?: hookFunction[];
 }
 
 interface Listener {

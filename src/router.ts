@@ -8,11 +8,16 @@ export class Router {
   constructor() {
     this.currentPath = window.location.pathname + window.location.search;
     this.previousPath = this.currentPath;
+    window.addEventListener("popstate", this.go);
     document.body.addEventListener("click", (event: Event) => {
       event.preventDefault();
       const url = (event.target as HTMLLinkElement).getAttribute("href") ?? "";
-      window.history.pushState({}, "", url);
-      this.go(url);
+      window.history.pushState(
+        { currentPath: url, previousPath: this.currentPath },
+        "",
+        url
+      );
+      this.go();
     });
   }
 
@@ -20,6 +25,12 @@ export class Router {
     (match instanceof RegExp && match.test(path)) ||
     (typeof match === "function" && match(path)) ||
     (typeof match === "string" && match === path);
+
+  private callHooks = async (hooks: hookFunction[], state: State) => {
+    hooks.forEach((hook) => {
+      hook(state);
+    });
+  };
 
   private handleListener = async (listener: Listener) => {
     const args = {
@@ -31,14 +42,14 @@ export class Router {
     const { route, hooks } = listener;
 
     if (this.isMatch(route, this.currentPath) && hooks.beforeEnter) {
-      await hooks.beforeEnter(args);
+      await this.callHooks(hooks.beforeEnter, args);
     }
 
     if (this.isMatch(route, this.currentPath) && hooks.onEnter) {
-      await hooks.onEnter(args);
+      await this.callHooks(hooks.onEnter, args);
     }
     if (this.isMatch(route, this.previousPath) && hooks.onLeave) {
-      await hooks.onLeave(args);
+      await this.callHooks(hooks.onLeave, args);
     }
   };
 
@@ -54,10 +65,9 @@ export class Router {
     };
   };
 
-  go = (url: string, state = {}): void => {
+  go = (): void => {
     this.previousPath = this.currentPath;
     this.currentPath = window.location.pathname + window.location.search;
-    window.history.pushState(state, url, url);
 
     this.handleAllListeners();
   };
