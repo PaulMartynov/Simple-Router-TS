@@ -9,7 +9,6 @@ export abstract class Router {
   constructor() {
     this.currentPath = this.getPath();
     this.previousPath = this.currentPath;
-    window.addEventListener("popstate", this.go);
     document.body.addEventListener("click", (event: Event) => {
       event.preventDefault();
       const url = (event.target as HTMLLinkElement).getAttribute("href") ?? "";
@@ -77,12 +76,22 @@ export abstract class Router {
 }
 
 export class HashRouter extends Router {
+  constructor() {
+    super();
+    window.addEventListener("hashchange", this.go);
+  }
+
   getPath = (): string => {
     return window.location.hash.slice(1);
   };
 }
 
 export class HistoryRouter extends Router {
+  constructor() {
+    super();
+    window.addEventListener("popstate", this.go);
+  }
+
   getPath = (): string => {
     return window.location.pathname + window.location.search;
   };
