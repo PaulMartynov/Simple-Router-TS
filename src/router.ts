@@ -6,7 +6,7 @@ export abstract class Router {
 
   private previousPath: string;
 
-  constructor() {
+  protected constructor() {
     this.currentPath = this.getPath();
     this.previousPath = this.currentPath;
     document.body.addEventListener("click", (event: Event) => {
